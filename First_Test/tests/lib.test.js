@@ -1,5 +1,6 @@
 const lib = require('../lib');
 const db = require('../db');
+const mail = require('../mail');
 
 // describe is a function in jasmine/test where we can group all our related tests in single function. we replace test with it here.
 describe('absolute', () => {
@@ -87,4 +88,22 @@ describe('applyDiscount', () => {
         expect(order.totalprice).toBe(9);
     });
 });
+
+describe('notifyCustomer', () => {
+    it('should send an email to customer', () => {
+        db.getCustomerSync = function(customerId) {
+            return { email: 'a' };
+        }
+
+        let mailSent = false;
+        mail.send = function(email, message) {
+            mailSent = true;
+        }
+
+        lib.notifyCustomer({ customerId: 1 });
+
+        expect(mailSent).toBe(true);
+    });
+});
+
 
