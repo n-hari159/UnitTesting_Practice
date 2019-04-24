@@ -17,3 +17,10 @@ describe('absolute', () => {
         expect(result).toBe(0);
     });
 });
+
+describe('greet', () => {
+    it('should return the greeting message', () => {
+        const result = lib.greet('Hari');
+        expect(result).toMatch(/Hari/); // using regular expressions to make it balanced(not to be too specific)
+    });
+});
